@@ -24,13 +24,16 @@ jobs:
         with:
           api-key: ${{ secrets.IONOS_API_KEY }}
           service-host: api-us.ionos.space
-          project-id: 3369ec38-ca99-422b-8892-c98567e445b1
+          project-id: 62b2d14b-f6a7-492e-aeaa-0857127cd0c7
           action: retrieve-info
 
 
   build:
     name: build
     needs: retrieve-project
+    permissions:
+      contents: read
+      packages: write
     if: ${{ needs.retrieve-project.outputs.deployment-enabled == 'true' }}
     uses: ./.github/workflows/JesusIvan-build.yaml
     with:
@@ -50,6 +53,6 @@ jobs:
         with:
           api-key: ${{ secrets.IONOS_API_KEY }}
           service-host: api-us.ionos.space
-          project-id: 3369ec38-ca99-422b-8892-c98567e445b1
+          project-id: 62b2d14b-f6a7-492e-aeaa-0857127cd0c7
           branch-id: ${{ needs.retrieve-project.outputs.branch-id }}
           action: dispatch-deployments
